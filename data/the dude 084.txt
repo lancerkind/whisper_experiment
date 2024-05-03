@@ -1,0 +1,11 @@
+Episode: 084
+Link to episode: http://LancerKind.com/ntontun 
+Tags: cats, dogs, animals
+Series: The series about animal catagories
+Link to series: http://LancerKind.com/series/thonounu
+# another field that contains the podcast context so that the company name, host name will be spelled write during transcription 
+Description: Lancer and guest Bob Neuhause test the taxonomy.
+This description can get pretty long.
+
+And here is another line.
+Transcript: 
