@@ -3,15 +3,18 @@ import argparse
 from typing import Any, Dict
 from openai import OpenAI
 
-def load_phonetic_dictionary(filename: str)-> Dict[str, str]:
+""" 
+Podcast context contains information about the podcast from the tags and show notes and is used to
+correct phonetic spelling errors.
+"""
+def load_podcast_context(filename: str)-> str:
     with open(filename, "r") as f:
-        data = json.load(f)
+        data = f.read()
     return data
 
-def correct_transcript(transcript_filename: str, phonetic_dictionary: Dict[str, str]) -> str :
+def correct_transcript(transcript_filename: str, podcast_context: str) -> str :
     client = OpenAI()
-    glossary_prompt: str = "You're role is as a highly paid copy editor. The transcript I'm giving you has phonetic errors. Use this sample text to correct the spelling of guest names and terms used in the podcast: " + ", ".join([f"{term} ({phonetic})" for term, phonetic in phonetic_dictionary.items()])
-    #glossary_prompt: str = "You're role is as a highly paid copy editor. The transcript I'm giving you has phonetic errors. Use this sample text to correct the spelling of guest names and terms used in the podcast: " + ", ".join([f"{term} ({phonetic})" for term, phonetic in phonetic_dictionary.items()])
+    glossary_prompt: str = "You're role is as a highly paid copy editor. The transcript I'm giving you has phonetic errors. Use this sample text to correct the spelling of guest names and terms used in the podcast: " + podcast_context
     
     with open(transcript_filename, "r") as f:
         transcript = f.read()
@@ -34,13 +37,13 @@ def correct_transcript(transcript_filename: str, phonetic_dictionary: Dict[str, 
 
 def main():
     parser = argparse.ArgumentParser(description="Correct a given transcript with a given editorial prompt and print the corrected text.")
-    parser.add_argument("transcript_filename", type=str, help="The file name of the transcript to be corrected.")
-    parser.add_argument("phonetic_dictionary_filename", type=str, help="The file name of the phonetic dictionary to be used by the editor.")
+    parser.add_argument("transcriptFilename", type=str, help="The file name of the transcript to be corrected.")
+    parser.add_argument("podcastContext", type=str, help="The file name of the phonetic dictionary to be used by the editor.")
     args = parser.parse_args()
 
-    phonetic_dictionary: Dict[str, str] = load_phonetic_dictionary(args.phonetic_dictionary_filename)
-    corrected_text = correct_transcript(args.transcript_filename, phonetic_dictionary)
-    print(corrected_text)
+    podcastContext: str = load_podcast_context(args.podcastContext)
+    correctedText: str = correct_transcript(args.transcriptFilename, podcastContext)
+    print(correctedText)
 
 if __name__ == "__main__":
     main()
