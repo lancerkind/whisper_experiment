@@ -16,7 +16,7 @@ def generate_phonetics(term):
     return completion.choices[0].message.content.strip()
 
 # List of terms to transcribe phonetically
-terms = ["Nexus", "Richard Hundhausen", "Pothi.com", "LeSS", "SaFE", "Scrum", "Agile", "Multi-team Scrum", "Agile Thoughts"]
+terms = ["Nexus", "Richard Hundhausen", "Pothi.com", "LeSS", "SaFE", "Scrum", "Agile", "Software Development", "Multi-team Scrum", "Agile Thoughts"]
 
 # Generate phonetic dictionary
 phonetic_glossary = {term: generate_phonetics(term) for term in terms}
